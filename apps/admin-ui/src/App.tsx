@@ -18,7 +18,7 @@ function App() {
     setError(null);
 
     try {
-      const res = await fetch('http://localhost:4000/graphql', {
+      const res = await fetch('/graphql', {
         method: 'POST',
         headers: { 'content-type': 'application/json' },
         body: JSON.stringify({ query: '{ping}' }),
