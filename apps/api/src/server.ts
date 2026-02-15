@@ -3,8 +3,13 @@ import cors from '@fastify/cors';
 import { createYoga } from 'graphql-yoga';
 import { schema } from './graphql/schema.js';
 import type { FastifyRequest, FastifyReply } from 'fastify';
+import { MemoryHabitRepo, MemoryCheckInRepo } from '@habit-tracker/core';
+import type { ApiContext } from './graphql/context.js';
 
 const app = fastify({ logger: true });
+
+const habitRepo = new MemoryHabitRepo();
+const checkInRepo = new MemoryCheckInRepo();
 
 app.get('/health', async () => {
   return { status: 'ok' };
@@ -15,9 +20,19 @@ await app.register(cors, {
   credentials: true,
 });
 
-const yoga = createYoga<{ req: FastifyRequest; reply: FastifyReply }>({
+// const yoga = createYoga<{ req: FastifyRequest; reply: FastifyReply }>({
+//   schema,
+//   graphqlEndpoint: '/graphql',
+// });
+
+const yoga = createYoga<ApiContext>({
   schema,
-  graphqlEndpoint: '/graphql',
+  graphqlEndpoint: 'graphql',
+  context: (initial) => ({
+    ...initial,
+    habitRepo,
+    checkInRepo,
+  }),
 });
 
 app.route({

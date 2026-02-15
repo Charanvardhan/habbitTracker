@@ -1,11 +1,12 @@
-import { builder } from './builder.js';
+import { builder } from './builder';
+import './resolver';
 
-builder.queryType({
-  fields: (t) => ({
-    ping: t.string({
-      resolve: () => 'pong',
-    }),
-  }),
-});
+// builder.queryType({
+//   fields: (t) => ({
+//     ping: t.string({
+//       resolve: () => 'pong',
+//     }),
+//   }),
+// });
 
 export const schema = builder.toSchema({});

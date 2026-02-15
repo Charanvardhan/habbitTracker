@@ -6,3 +6,5 @@ export * from './ports/checkInRepo';
 export * from './actions/createHabit';
 export * from './actions/listHabits';
 export * from './actions/checkInHabit';
+export * from './testing/memoryHabitRepo';
+export * from './testing/memoryCheckInRepo';
